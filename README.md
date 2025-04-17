@@ -94,3 +94,82 @@ graph TD
     UP --> UQ[加载到知识图谱];
     UQ --> UR[结束];
 ```
+
+待处理图片3
+
+```mermaid
+graph TD
+    %% --- 1. 定义样式 ---
+    classDef inputStyle fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef processStyle fill:#ccf,stroke:#333,stroke-width:2px;
+    classDef parallelStyle fill:#e6e6fa,stroke:#555,stroke-width:1px,stroke-dasharray: 5 5;
+    classDef mergeStyle fill:#ffcc99,stroke:#333,stroke-width:2px;
+    classDef outputStyle fill:#9cf,stroke:#333,stroke-width:2px;
+    classDef ruleStyle fill:#d5f5e3,stroke:#1e8449,stroke-width:1.5px;
+    classDef mlStyle fill:#fdebd0,stroke:#d35400,stroke-width:1.5px;
+    classDef terminatorStyle fill:#666,stroke:#333,stroke-width:2px,color:#fff;
+    classDef decisionStyle fill:#f0ad4e,stroke:#333,stroke-width:2px;
+    classDef rectangleStyle fill:#eee,stroke:#333,stroke-width:1px;
+
+    %% --- 2. 流程图节点定义 ---
+    A["开始: 启动知识推理任务"]
+    B["输入: 融合且验证后的<br>僵尸网络知识图谱<br>(实体, 关系, 属性, 置信度, 时序, 来源)"]
+    C{"推理任务需求分析<br>(如:预测关联? 归因? 发现模式?)"}
+    ParallelStart["并行/协同推理"]
+    D["整合与评估推断结果"]
+    D1{"综合考量<br>(规则强度, 模型置信度, 数据时效性, 来源可信度)"}
+    D2["推断排序与冲突消解<br>(选择高置信/高优先级结果, 处理矛盾推断)"]
+    E["输出: 深层/隐含/预测性情报"]
+    E_Examples["例如:<br>- 预测潜在攻击目标/基础设施<br>- 揭示未知的攻击者协作<br>- 推断攻击动机/归属<br>- 评估威胁演化趋势/影响<br>- 生成预警信号"]
+    E_End["结束: 推理完成"]
+
+    %% --- 3. 子图定义 ---
+    subgraph Rule-Based Reasoning [基于规则的符号推理]
+        direction LR
+        R1["加载预定义规则库<br>(本体公理, 安全逻辑, 专家启发式规则)"]
+        R2["应用规则引擎<br>(匹配图谱模式, 执行逻辑推导, 如传递性)"]
+        R3["生成规则驱动的推断<br>(显式逻辑链, 归因, 控制链推断等)"]
+        R4["评估推断<br>(基于规则强度, 输入数据置信度, 可解释性)"]
+    end
+
+    subgraph ML-Based Reasoning [基于机器学习的统计推理]
+        direction LR
+        M1["加载预训练模型<br>(如图神经网络GNNs等)"]
+        M2["模型应用于图谱<br>(学习结构与属性, 执行任务<br>如链接预测, 节点分类, 异常检测)"]
+        M3["生成模型驱动的推断<br>(潜在关联, 节点聚类, 预测性洞察等)"]
+        M4["评估推断<br>(基于模型置信度/概率, 输入数据质量)"]
+    end
+
+    %% --- 4. 链接定义 ---
+    A --> B
+    B --> C
+    C --> ParallelStart
+    ParallelStart --> R1
+    ParallelStart --> M1
+    R1 --> R2
+    R2 --> R3
+    R3 --> R4
+    M1 --> M2
+    M2 --> M3
+    M3 --> M4
+    R4 --> D
+    M4 --> D
+    D --> D1
+    D1 --> D2
+    D2 --> E
+    E --> E_Examples
+    E --> E_End
+
+    %% --- 5. 样式应用 (放在最后) ---
+    class A,E_End terminatorStyle;
+    class B inputStyle;
+    class C decisionStyle;
+    class ParallelStart processStyle;
+    class R1,R2,R3,R4 ruleStyle;
+    class M1,M2,M3,M4 mlStyle;
+    class D mergeStyle;
+    class D1 decisionStyle;
+    class D2 processStyle;
+    class E outputStyle;
+    class E_Examples rectangleStyle;
+```
